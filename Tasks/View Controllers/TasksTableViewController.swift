@@ -7,17 +7,25 @@
 //
 
 import UIKit
+import CoreData
 
 class TasksTableViewController: UITableViewController {
+    
+    // This is not a good/efficient way to do this
+    // The fetch request will be executed every time tasks is accessed
+    var tasks: [Task] {
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        let moc = CoreDataStack.shared.mainContext
+        do {
+            return try moc.fetch(fetchRequest)
+        } catch {
+            print("Error fetching tasks: \(error)")
+            return []
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
