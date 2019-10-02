@@ -22,6 +22,7 @@ class TaskDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
     }
     
     @IBAction func saveTapped(_ sender: Any) {
@@ -29,6 +30,7 @@ class TaskDetailViewController: UIViewController {
     }
     
     func updateViews() {
+        guard isViewLoaded else { return }
         title = task?.name ?? "Create Task"
         nameTextField.text = task?.name
         notesTextView.text = task?.notes
