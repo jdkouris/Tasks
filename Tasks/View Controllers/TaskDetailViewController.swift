@@ -26,7 +26,19 @@ class TaskDetailViewController: UIViewController {
     }
     
     @IBAction func saveTapped(_ sender: Any) {
+        // Stretch goal of diabling the save button
+        guard let name = nameTextField.text,
+            !name.isEmpty else { return }
         
+        let notes = notesTextView.text
+        
+        if let task = task {
+            // editing an existing task
+            task.name = name
+            task.notes = notes
+        } else {
+            let _ = Task(name: name, notes: notes)
+        }
     }
     
     func updateViews() {
