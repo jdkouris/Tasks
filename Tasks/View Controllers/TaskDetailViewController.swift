@@ -39,6 +39,14 @@ class TaskDetailViewController: UIViewController {
         } else {
             let _ = Task(name: name, notes: notes)
         }
+        
+        do {
+            let moc = CoreDataStack.shared.mainContext
+            try moc.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     func updateViews() {
