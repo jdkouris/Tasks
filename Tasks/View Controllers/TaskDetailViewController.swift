@@ -56,4 +56,12 @@ class TaskDetailViewController: UIViewController {
         notesTextView.text = task?.notes
     }
     
+    @IBAction func textFieldDidEdit(_ sender: Any) {
+        if let name = nameTextField.text, !name.isEmpty {
+            saveBarButtonItem.isEnabled = true
+        } else {
+            saveBarButtonItem.isEnabled = false
+        }
+    }
+    
 }

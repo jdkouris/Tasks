@@ -78,6 +78,9 @@
                                                 <rect key="frame" x="81.5" y="0.0" width="292.5" height="31.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="textFieldDidEdit:" destination="BGT-V8-axZ" eventType="editingChanged" id="R7h-hB-W9B"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -142,6 +145,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2kN-Yy-hpZ"/>
+        <segue reference="mxk-zp-i1v"/>
     </inferredMetricsTieBreakers>
 </document>
