@@ -16,6 +16,7 @@
 		29FE6BD72344372300B4FA73 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BD62344372300B4FA73 /* TaskDetailViewController.swift */; };
 		29FE6BDB23443A6900B4FA73 /* Tasks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BD923443A6900B4FA73 /* Tasks.xcdatamodeld */; };
 		29FE6BDD23443BAA00B4FA73 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BDC23443BAA00B4FA73 /* CoreDataStack.swift */; };
+		29FE6BDF23443E8300B4FA73 /* Task+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BDE23443E8300B4FA73 /* Task+Convenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		29FE6BD62344372300B4FA73 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		29FE6BDA23443A6900B4FA73 /* Tasks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tasks.xcdatamodel; sourceTree = "<group>"; };
 		29FE6BDC23443BAA00B4FA73 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		29FE6BDE23443E8300B4FA73 /* Task+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Convenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			children = (
 				29FE6BD923443A6900B4FA73 /* Tasks.xcdatamodeld */,
 				29FE6BDC23443BAA00B4FA73 /* CoreDataStack.swift */,
+				29FE6BDE23443E8300B4FA73 /* Task+Convenience.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				29FE6BC0234436B600B4FA73 /* AppDelegate.swift in Sources */,
 				29FE6BD52344370900B4FA73 /* TasksTableViewController.swift in Sources */,
 				29FE6BDB23443A6900B4FA73 /* Tasks.xcdatamodeld in Sources */,
+				29FE6BDF23443E8300B4FA73 /* Task+Convenience.swift in Sources */,
 				29FE6BDD23443BAA00B4FA73 /* CoreDataStack.swift in Sources */,
 				29FE6BD72344372300B4FA73 /* TaskDetailViewController.swift in Sources */,
 				29FE6BC2234436B600B4FA73 /* SceneDelegate.swift in Sources */,
