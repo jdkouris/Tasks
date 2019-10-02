@@ -14,14 +14,24 @@ class TaskDetailViewController: UIViewController {
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var saveBarButtonItem: UIBarButtonItem!
     
+    var task: Task? {
+        didSet {
+            updateViews()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func saveTapped(_ sender: Any) {
         
+    }
+    
+    func updateViews() {
+        title = task?.name ?? "Create Task"
+        nameTextField.text = task?.name
+        notesTextView.text = task?.notes
     }
     
 }
