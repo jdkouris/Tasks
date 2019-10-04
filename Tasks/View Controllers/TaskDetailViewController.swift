@@ -31,14 +31,18 @@ class TaskDetailViewController: UIViewController {
         guard let name = nameTextField.text,
             !name.isEmpty else { return }
         
+        let priorityIndex = priorityControl.selectedSegmentIndex
+        let priority = TaskPriority.allCases[priorityIndex]
+        
         let notes = notesTextView.text
         
         if let task = task {
             // editing an existing task
             task.name = name
+            task.priority = priority.rawValue
             task.notes = notes
         } else {
-            let _ = Task(name: name, notes: notes)
+            let _ = Task(name: name, notes: notes, priority: priority)
         }
         
         do {
@@ -54,6 +58,18 @@ class TaskDetailViewController: UIViewController {
         guard isViewLoaded else { return }
         title = task?.name ?? "Create Task"
         nameTextField.text = task?.name
+        
+        var priority: TaskPriority
+        if let taskPriorityString = task?.priority, let taskPriority = TaskPriority(rawValue: taskPriorityString) {
+            priority = taskPriority
+        } else {
+            priority = .normal
+        }
+        
+        if let index = TaskPriority.allCases.firstIndex(of: priority) {
+            priorityControl.selectedSegmentIndex = index
+        }
+        
         notesTextView.text = task?.notes
     }
     
