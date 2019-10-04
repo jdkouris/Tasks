@@ -9,11 +9,24 @@
 import Foundation
 import CoreData
 
-enum TaskPriority: String, CaseIterable {
-    case low
-    case normal
-    case high
-    case critical
+enum TaskPriority: Int16, CaseIterable {
+    case low = 0
+    case normal = 1
+    case high = 2
+    case critical = 3
+    
+    var name: String {
+        switch self {
+        case .low:
+            return "Low"
+        case .normal:
+            return "Normal"
+        case .high:
+            return "High"
+        case .critical:
+            return "Critical"
+        }
+    }
 }
 
 extension Task {

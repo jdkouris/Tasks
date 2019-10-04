@@ -14,7 +14,7 @@ class TasksTableViewController: UITableViewController {
     lazy var fetchedResultsController: NSFetchedResultsController<Task> = {
         // First we need a fetch request
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "priority", ascending: true), NSSortDescriptor(key: "name", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "priority", ascending: false), NSSortDescriptor(key: "name", ascending: true)]
         
         let moc = CoreDataStack.shared.mainContext
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: "priority", cacheName: nil)
@@ -46,7 +46,8 @@ class TasksTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let sectionInfo = fetchedResultsController.sections?[section] else { return nil }
-        return sectionInfo.name.capitalized
+        guard let sectionName = TaskPriority(rawValue: Int16(sectionInfo.name) ?? 0) else { return nil }
+        return sectionName.name.capitalized
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
