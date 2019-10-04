@@ -11,18 +11,23 @@ import CoreData
 
 class TasksTableViewController: UITableViewController {
     
-    // This is not a good/efficient way to do this
-    // The fetch request will be executed every time tasks is accessed
-    var tasks: [Task] {
+    lazy var fetchedResultsController: NSFetchedResultsController<Task> = {
+        // First we need a fetch request
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "priority", ascending: true), NSSortDescriptor(key: "name", ascending: true)]
+        
         let moc = CoreDataStack.shared.mainContext
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: "priority", cacheName: nil)
+        frc.delegate = self
+        
         do {
-            return try moc.fetch(fetchRequest)
+            try frc.performFetch()
         } catch {
-            print("Error fetching tasks: \(error)")
-            return []
+            fatalError("Error performing fetch for frc: \(error)")
         }
-    }
+        
+        return frc
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,21 +39,29 @@ class TasksTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedResultsController.sections?.count ?? 1
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { return nil }
+        return sectionInfo.name.capitalized
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
-        cell.textLabel?.text = tasks[indexPath.row].name
+        cell.textLabel?.text = fetchedResultsController.object(at: indexPath).name
         return cell
     }
     
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let task = tasks[indexPath.row]
+            let task = fetchedResultsController.object(at: indexPath)
             let moc = CoreDataStack.shared.mainContext
             moc.delete(task)
             do {
@@ -67,9 +80,13 @@ class TasksTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowTaskDetail" {
             if let detailVC = segue.destination as? TaskDetailViewController, let indexPath = tableView.indexPathForSelectedRow {
-                detailVC.task = tasks[indexPath.row]
+                detailVC.task = fetchedResultsController.object(at: indexPath)
             }
         }
     }
+    
+}
+
+extension TasksTableViewController: NSFetchedResultsControllerDelegate {
     
 }
