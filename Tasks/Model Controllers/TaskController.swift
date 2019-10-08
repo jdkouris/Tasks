@@ -88,9 +88,10 @@ class TaskController {
     }
     
     func update(task: Task, with representation: TaskRepresentation) {
+        let priority = TaskPriority(stringName: representation.priority) ?? TaskPriority.normal
         task.name = representation.name
         task.notes = representation.notes
-        task.priority = representation.priority
+        task.priority = priority.rawValue
     }
     
     func saveToPersistentStore() throws {

@@ -11,6 +11,6 @@ import Foundation
 struct TaskRepresentation: Codable {
     var name: String
     var notes: String?
-    var priority: Int16
+    var priority: String
     var identifier: String?
 }

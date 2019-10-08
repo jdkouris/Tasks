@@ -28,7 +28,7 @@ enum TaskPriority: Int16, CaseIterable {
         }
     }
     
-    init(stringName: String) {
+    init?(stringName: String) {
         switch stringName {
         case "low":
             self = .low
@@ -39,7 +39,7 @@ enum TaskPriority: Int16, CaseIterable {
         case "critical":
             self = .critical
         default:
-            self = .normal
+            return nil
         }
     }
 }
@@ -56,7 +56,7 @@ extension Task {
     
     // Retrieving a task from a server
     convenience init?(taskRepresentation: TaskRepresentation, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
-        guard let priority = TaskPriority(rawValue: taskRepresentation.priority),
+        guard let priority = TaskPriority(stringName: taskRepresentation.priority),
             let identifierString = taskRepresentation.identifier,
             let identifier = UUID(uuidString: identifierString) else { return nil }
         
@@ -65,8 +65,8 @@ extension Task {
     
     // Sending a task to a server
     var taskRepresentation: TaskRepresentation? {
-        guard let name = name else { return nil }
-        return TaskRepresentation(name: name, notes: notes, priority: priority, identifier: uuid?.uuidString ?? "")
+        guard let name = name, let priority = TaskPriority(rawValue: priority) else { return nil }
+        return TaskRepresentation(name: name, notes: notes, priority: priority.name.lowercased(), identifier: uuid?.uuidString ?? "")
     }
     
 }
