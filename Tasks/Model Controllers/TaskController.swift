@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class TaskController {
     
@@ -44,6 +45,50 @@ class TaskController {
                 return
             }
         }.resume()
+    }
+    
+    private func updateTasks(with representations: [TaskRepresentation]) throws {
+//        let tasksWithID = representations.filter { (taskRepresentation) -> Bool in
+//            return taskRepresentation.identifier != nil
+//        }
+        // The code below is shorthand for the code above
+        let tasksWithID = representations.filter({ $0.identifier != nil })
+        let identifiersToFetch = tasksWithID.compactMap({ UUID(uuidString: $0.identifier!) })
+        
+        // Creating a dictionary of TaskRepresentation objects keyed by UUID
+        let representationsByID = Dictionary(uniqueKeysWithValues: zip(identifiersToFetch, tasksWithID))
+        
+        var tasksToCreate = representationsByID
+        
+        // Fetch the objects from CoreData that have a UUID contained in the identifiersToFetch array
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid IN %@", identifiersToFetch)
+        
+        let context = CoreDataStack.shared.mainContext
+        
+        do {
+            let existingTasks = try context.fetch(fetchRequest)
+            for task in existingTasks {
+                guard let id = task.uuid,
+                    let representation = representationsByID[id] else {
+                        continue
+                }
+                self.update(task: task, with: representation)
+                tasksToCreate.removeValue(forKey: id)
+            }
+            
+            for representation in tasksToCreate.values {
+                let _ = Task(taskRepresentation: representation, context: context)
+            }
+        } catch {
+            print("Error fetching tasks for UUIDs: \(error)")
+        }
+    }
+    
+    func update(task: Task, with representation: TaskRepresentation) {
+        task.name = representation.name
+        task.notes = representation.notes
+        task.priority = representation.priority
     }
     
 }
