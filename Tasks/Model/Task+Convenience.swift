@@ -38,4 +38,11 @@ extension Task {
         self.priority = priority.rawValue
     }
     
+    convenience init?(taskRepresentation: TaskRepresentation, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+        guard let priority = TaskPriority(rawValue: taskRepresentation.priority),
+            let identifierString = taskRepresentation.identifier,
+            let identifier = UUID(uuidString: identifierString) else { return nil }
+        self.init(context: context)
+    }
+    
 }
