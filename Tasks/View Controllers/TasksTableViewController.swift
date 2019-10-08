@@ -11,6 +11,8 @@ import CoreData
 
 class TasksTableViewController: UITableViewController {
     
+    private let taskController = TaskController()
+    
     lazy var fetchedResultsController: NSFetchedResultsController<Task> = {
         // First we need a fetch request
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
@@ -38,6 +40,14 @@ class TasksTableViewController: UITableViewController {
         super.viewDidLoad()
     }
 
+    @IBAction func shouldRefresh(_ sender: Any) {
+        taskController.fetchTasksFromServer { (_) in
+            DispatchQueue.main.async {
+                self.refreshControl?.endRefreshing()
+            }
+        }
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {

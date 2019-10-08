@@ -49,6 +49,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="zde-qO-D0Z">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="shouldRefresh:" destination="n97-jH-g6N" eventType="valueChanged" id="v5r-m2-MXd"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oCg-3J-GaD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
