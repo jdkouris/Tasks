@@ -39,12 +39,19 @@ extension Task {
         self.uuid = identifier
     }
     
+    // Retrieving a task from a server
     convenience init?(taskRepresentation: TaskRepresentation, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         guard let priority = TaskPriority(rawValue: taskRepresentation.priority),
             let identifierString = taskRepresentation.identifier,
             let identifier = UUID(uuidString: identifierString) else { return nil }
         
         self.init(name: taskRepresentation.name, notes: taskRepresentation.notes, priority: priority, identifier: identifier, context: context)
+    }
+    
+    // Sending a task to a server
+    var taskRepresentation: TaskRepresentation? {
+        guard let name = name else { return nil }
+        return TaskRepresentation(name: name, notes: notes, priority: priority, identifier: uuid?.uuidString ?? "")
     }
     
 }
