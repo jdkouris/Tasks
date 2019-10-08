@@ -83,12 +83,18 @@ class TaskController {
         } catch {
             print("Error fetching tasks for UUIDs: \(error)")
         }
+        
+        try saveToPersistentStore()
     }
     
     func update(task: Task, with representation: TaskRepresentation) {
         task.name = representation.name
         task.notes = representation.notes
         task.priority = representation.priority
+    }
+    
+    func saveToPersistentStore() throws {
+        try CoreDataStack.shared.mainContext.save()
     }
     
 }
