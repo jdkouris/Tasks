@@ -58,6 +58,7 @@ class TaskController {
         // Creating a dictionary of TaskRepresentation objects keyed by UUID
         let representationsByID = Dictionary(uniqueKeysWithValues: zip(identifiersToFetch, tasksWithID))
         
+        // Running log of all the tasks we need to do something with (either update existing tasks or create new ones)
         var tasksToCreate = representationsByID
         
         // Fetch the objects from CoreData that have a UUID contained in the identifiersToFetch array
@@ -68,15 +69,20 @@ class TaskController {
         
         do {
             let existingTasks = try context.fetch(fetchRequest)
+            
+            // Updating existing Tasks
             for task in existingTasks {
                 guard let id = task.uuid,
                     let representation = representationsByID[id] else {
                         continue
                 }
                 self.update(task: task, with: representation)
+                
+                // Remove the object that we just updated from our running log
                 tasksToCreate.removeValue(forKey: id)
             }
             
+            // Create new Tasks for all remaining server Tasks
             for representation in tasksToCreate.values {
                 let _ = Task(taskRepresentation: representation, context: context)
             }
