@@ -36,7 +36,7 @@ class TaskController {
                 // Create an array of just the values from TaskRepresentations and discarding the keys ([TaskRepresentation])
                 let taskRepresentations = Array(dictionaryOfTasks.values)
                 
-                // TODO: Implement a way to update all tasks using the data we received
+                try self.updateTasks(with: taskRepresentations)
                 
                 completion(nil)
             } catch {
