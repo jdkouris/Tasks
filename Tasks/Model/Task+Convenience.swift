@@ -36,6 +36,7 @@ extension Task {
         self.name = name
         self.notes = notes
         self.priority = priority.rawValue
+        self.uuid = identifier
     }
     
     convenience init?(taskRepresentation: TaskRepresentation, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
