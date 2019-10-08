@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29287D9D234C21BF00A3731D /* TaskRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29287D9C234C21BF00A3731D /* TaskRepresentation.swift */; };
 		29FE6BC0234436B600B4FA73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BBF234436B600B4FA73 /* AppDelegate.swift */; };
 		29FE6BC2234436B600B4FA73 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BC1234436B600B4FA73 /* SceneDelegate.swift */; };
 		29FE6BC7234436B600B4FA73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29FE6BC5234436B600B4FA73 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		29287D9B234C201200A3731D /* Tasks 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Tasks 3.xcdatamodel"; sourceTree = "<group>"; };
+		29287D9C234C21BF00A3731D /* TaskRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepresentation.swift; sourceTree = "<group>"; };
 		29E073272346DA7B00C5160C /* Tasks 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Tasks 2.xcdatamodel"; sourceTree = "<group>"; };
 		29FE6BBC234436B600B4FA73 /* Tasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29FE6BBF234436B600B4FA73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				29FE6BD923443A6900B4FA73 /* Tasks.xcdatamodeld */,
 				29FE6BDC23443BAA00B4FA73 /* CoreDataStack.swift */,
 				29FE6BDE23443E8300B4FA73 /* Task+Convenience.swift */,
+				29287D9C234C21BF00A3731D /* TaskRepresentation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29FE6BC0234436B600B4FA73 /* AppDelegate.swift in Sources */,
+				29287D9D234C21BF00A3731D /* TaskRepresentation.swift in Sources */,
 				29FE6BD52344370900B4FA73 /* TasksTableViewController.swift in Sources */,
 				29FE6BDB23443A6900B4FA73 /* Tasks.xcdatamodeld in Sources */,
 				29FE6BDF23443E8300B4FA73 /* Task+Convenience.swift in Sources */,
