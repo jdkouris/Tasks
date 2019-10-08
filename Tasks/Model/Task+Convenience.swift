@@ -31,7 +31,7 @@ enum TaskPriority: Int16, CaseIterable {
 
 extension Task {
     
-    convenience init(name: String, notes: String? = nil, priority: TaskPriority = .normal, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+    convenience init(name: String, notes: String? = nil, priority: TaskPriority = .normal, identifier: UUID = UUID(), context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         self.init(context: context)
         self.name = name
         self.notes = notes
@@ -42,7 +42,8 @@ extension Task {
         guard let priority = TaskPriority(rawValue: taskRepresentation.priority),
             let identifierString = taskRepresentation.identifier,
             let identifier = UUID(uuidString: identifierString) else { return nil }
-        self.init(context: context)
+        
+        self.init(name: taskRepresentation.name, notes: taskRepresentation.notes, priority: priority, identifier: identifier, context: context)
     }
     
 }
