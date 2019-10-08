@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		29287D9D234C21BF00A3731D /* TaskRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29287D9C234C21BF00A3731D /* TaskRepresentation.swift */; };
+		29287DA0234C27A800A3731D /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29287D9F234C27A800A3731D /* TaskController.swift */; };
 		29FE6BC0234436B600B4FA73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BBF234436B600B4FA73 /* AppDelegate.swift */; };
 		29FE6BC2234436B600B4FA73 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE6BC1234436B600B4FA73 /* SceneDelegate.swift */; };
 		29FE6BC7234436B600B4FA73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29FE6BC5234436B600B4FA73 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		29287D9B234C201200A3731D /* Tasks 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Tasks 3.xcdatamodel"; sourceTree = "<group>"; };
 		29287D9C234C21BF00A3731D /* TaskRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepresentation.swift; sourceTree = "<group>"; };
+		29287D9F234C27A800A3731D /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		29E073272346DA7B00C5160C /* Tasks 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Tasks 2.xcdatamodel"; sourceTree = "<group>"; };
 		29FE6BBC234436B600B4FA73 /* Tasks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29FE6BBF234436B600B4FA73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29287D9E234C279200A3731D /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				29287D9F234C27A800A3731D /* TaskController.swift */,
+			);
+			path = "Model Controllers";
+			sourceTree = "<group>";
+		};
 		29FE6BB3234436B600B4FA73 = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				29FE6BD823443A3C00B4FA73 /* Model */,
+				29287D9E234C279200A3731D /* Model Controllers */,
 				29FE6BD3234436E800B4FA73 /* View Controllers */,
 				29FE6BBF234436B600B4FA73 /* AppDelegate.swift */,
 				29FE6BC1234436B600B4FA73 /* SceneDelegate.swift */,
@@ -175,6 +186,7 @@
 				29287D9D234C21BF00A3731D /* TaskRepresentation.swift in Sources */,
 				29FE6BD52344370900B4FA73 /* TasksTableViewController.swift in Sources */,
 				29FE6BDB23443A6900B4FA73 /* Tasks.xcdatamodeld in Sources */,
+				29287DA0234C27A800A3731D /* TaskController.swift in Sources */,
 				29FE6BDF23443E8300B4FA73 /* Task+Convenience.swift in Sources */,
 				29FE6BDD23443BAA00B4FA73 /* CoreDataStack.swift in Sources */,
 				29FE6BD72344372300B4FA73 /* TaskDetailViewController.swift in Sources */,
