@@ -73,13 +73,22 @@ class TasksTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let task = fetchedResultsController.object(at: indexPath)
-            let moc = CoreDataStack.shared.mainContext
-            moc.delete(task)
-            do {
-                try moc.save()
-            } catch {
-                moc.reset()
-                print("Error saving managed object context: \(error)")
+            
+            taskController.deleteTaskFromServer(task) { (error) in
+                if let error = error {
+                    print("Error deleting task from server: \(error)")
+                    return
+                }
+                
+                let moc = CoreDataStack.shared.mainContext
+                moc.delete(task)
+                
+                do {
+                    try moc.save()
+                } catch {
+                    moc.reset()
+                    print("Error saving managed object context: \(error)")
+                }
             }
         }
     }
