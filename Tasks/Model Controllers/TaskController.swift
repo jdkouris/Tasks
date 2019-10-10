@@ -9,11 +9,20 @@
 import Foundation
 import CoreData
 
+enum HTTPMethod: String {
+    case get = "GET"
+    case put = "PUT"
+    case post = "POST"
+    case delete = "DELETE"
+}
+
 class TaskController {
+    
+    typealias CompletionHandler = (Error?) -> Void
     
     let baseURL = URL(string: "http://tasks-3f211.firebaseio.com/")!
     
-    func fetchTasksFromServer(completion: @escaping (Error?) -> Void = { _ in }) {
+    func fetchTasksFromServer(completion: @escaping CompletionHandler = { _ in }) {
         let requestURL = baseURL.appendingPathExtension("json")
         
         URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
@@ -44,6 +53,42 @@ class TaskController {
                 completion(error)
                 return
             }
+        }.resume()
+    }
+    
+    func put(task: Task, completion: @escaping CompletionHandler = { _ in }) {
+        let uuid = task.uuid ?? UUID()
+        let requestURL = baseURL.appendingPathComponent(uuid.uuidString).appendingPathExtension("json")
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = HTTPMethod.put.rawValue
+        
+        do {
+            // Convert managed object to codable conforming struct
+            guard var representation = task.taskRepresentation else {
+                completion(nil)
+                return
+            }
+            
+            representation.identifier = uuid.uuidString
+            task.uuid = uuid
+            
+            try saveToPersistentStore()
+            
+            request.httpBody = try JSONEncoder().encode(representation)
+            
+        } catch {
+            print("Error encoding task (or saving to persistent store): \(error)")
+            completion(error)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { (_, _, error) in
+            if let error = error {
+                print("Error PUTing task to server: \(error)")
+                completion(error)
+                return
+            }
+            completion(nil)
         }.resume()
     }
     
