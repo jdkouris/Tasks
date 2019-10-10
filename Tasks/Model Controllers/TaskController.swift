@@ -72,7 +72,7 @@ class TaskController {
             representation.identifier = uuid.uuidString
             task.uuid = uuid
             
-            try saveToPersistentStore()
+            try CoreDataStack.shared.save()
             
             request.httpBody = try JSONEncoder().encode(representation)
             
@@ -114,6 +114,7 @@ class TaskController {
 //        }
         // The code below is shorthand for the code above
         let tasksWithID = representations.filter({ $0.identifier != nil })
+        
         let identifiersToFetch = tasksWithID.compactMap({ UUID(uuidString: $0.identifier!) })
         
         // Creating a dictionary of TaskRepresentation objects keyed by UUID
@@ -126,32 +127,34 @@ class TaskController {
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uuid IN %@", identifiersToFetch)
         
-        let context = CoreDataStack.shared.mainContext
+        let context = CoreDataStack.shared.container.newBackgroundContext()
         
-        do {
-            let existingTasks = try context.fetch(fetchRequest)
-            
-            // Updating existing Tasks
-            for task in existingTasks {
-                guard let id = task.uuid,
-                    let representation = representationsByID[id] else {
-                        continue
-                }
-                self.update(task: task, with: representation)
+        context.perform {
+            do {
+                let existingTasks = try context.fetch(fetchRequest)
                 
-                // Remove the object that we just updated from our running log
-                tasksToCreate.removeValue(forKey: id)
+                // Updating existing Tasks
+                for task in existingTasks {
+                    guard let id = task.uuid,
+                        let representation = representationsByID[id] else {
+                            continue
+                    }
+                    self.update(task: task, with: representation)
+                    
+                    // Remove the object that we just updated from our running log
+                    tasksToCreate.removeValue(forKey: id)
+                }
+                
+                // Create new Tasks for all remaining server Tasks
+                for representation in tasksToCreate.values {
+                    let _ = Task(taskRepresentation: representation, context: context)
+                }
+            } catch {
+                print("Error fetching tasks for UUIDs: \(error)")
             }
-            
-            // Create new Tasks for all remaining server Tasks
-            for representation in tasksToCreate.values {
-                let _ = Task(taskRepresentation: representation, context: context)
-            }
-        } catch {
-            print("Error fetching tasks for UUIDs: \(error)")
         }
         
-        try saveToPersistentStore()
+        try CoreDataStack.shared.save(context: context)
     }
     
     func update(task: Task, with representation: TaskRepresentation) {
@@ -159,10 +162,6 @@ class TaskController {
         task.name = representation.name
         task.notes = representation.notes
         task.priority = priority.rawValue
-    }
-    
-    func saveToPersistentStore() throws {
-        try CoreDataStack.shared.mainContext.save()
     }
     
 }
