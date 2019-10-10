@@ -146,7 +146,9 @@ extension TasksTableViewController: NSFetchedResultsControllerDelegate {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         case .move:
             guard let indexPath = indexPath, let newIndexPath = newIndexPath else { return }
-            tableView.moveRow(at: indexPath, to: newIndexPath)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+//            tableView.moveRow(at: indexPath, to: newIndexPath)
         case .update:
             guard let indexPath = indexPath else { return }
             tableView.reloadRows(at: [indexPath], with: .automatic)
