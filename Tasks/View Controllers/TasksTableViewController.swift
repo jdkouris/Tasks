@@ -90,10 +90,14 @@ class TasksTableViewController: UITableViewController {
         if segue.identifier == "ShowTaskDetail" {
             if let detailVC = segue.destination as? TaskDetailViewController, let indexPath = tableView.indexPathForSelectedRow {
                 detailVC.task = fetchedResultsController.object(at: indexPath)
+                detailVC.taskController = taskController
+            }
+        } else if segue.identifier == "ShowTaskCreate" {
+            if let detailVC = segue.destination as? TaskDetailViewController {
+                detailVC.taskController = taskController
             }
         }
     }
-    
 }
 
 // MARK: - Fetched results controller delegate

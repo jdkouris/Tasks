@@ -15,6 +15,8 @@ class TaskDetailViewController: UIViewController {
     @IBOutlet weak var saveBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var priorityControl: UISegmentedControl!
     
+    var taskController: TaskController?
+    
     var task: Task? {
         didSet {
             updateViews()
@@ -41,8 +43,10 @@ class TaskDetailViewController: UIViewController {
             task.name = name
             task.priority = priority.rawValue
             task.notes = notes
+            taskController?.put(task: task)
         } else {
-            let _ = Task(name: name, notes: notes, priority: priority)
+            let task = Task(name: name, notes: notes, priority: priority)
+            taskController?.put(task: task)
         }
         
         do {
